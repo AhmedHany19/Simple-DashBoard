@@ -1,0 +1,111 @@
+﻿@model  IPagedList<Lect1.Models.Category>
+@using PagedList
+@using PagedList.Mvc
+
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<!--HEADER-->
+
+<header class="bg-success text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-folder"></i> @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+<!--SEARCH-->
+
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 ">
+                @Html.ActionLink("Create Category", "Create", null, new { @class = "btn btn-success" })
+            </div>
+            <div class="col-md-5 ms-auto">
+
+                @using (Html.BeginForm("Search", "Categories", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="Search Categories....."
+                               name="SearchFilter"
+                               value="@ViewBag.SearchFilter" />
+                        <button class="btn btn-success ms-2" type="submit">
+                            Search
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--POSTs-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Categories</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Title</td>
+                                        <td>@item.UpdateDate</td>
+                                        <td>
+                                            <a href="/Categories/Edit/@item.Id" class="btn btn-warning">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                            <a href="/Categories/Delete/@item.Id" class="btn btn-danger">
+                                                <i class="fa fa-trash "></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @Html.PagedListPager(
+                               Model,
+                               page => Url.Action("Search", new { page, PageSize = ViewBag.psize }),
+                               new PagedListRenderOptions
+                               {
+                                   LiElementClasses = new string[] { "page-item" },
+                                   LinkToPreviousPageFormat = "Previous",
+                                   LinkToNextPageFormat = "Next",
+                                   DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                   DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                   FunctionToTransformEachPageLink =
+                                           (li, a) =>
+                                           {
+                                               a.AddCssClass("page-link");
+                                               li.InnerHtml = a.ToString();
+                                               return li;
+                                           }
+                               }
+                      )
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

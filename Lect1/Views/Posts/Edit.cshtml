@@ -1,0 +1,85 @@
+﻿@model Lect1.Models.Post
+@using System.Configuration
+
+@{
+    string fullImagePath = Model.ImgPath;
+    string justImageName = Path.GetFileName(fullImagePath);
+    string shortRelativeImagePath = $"/{ConfigurationManager.AppSettings["UserImageFolderName"].ToString()}/{justImageName}";
+    ViewBag.Title = "Edit Post";
+}
+<!--Header-->
+<header class="bg-primary text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-folder"></i> @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+
+<!--Body-->
+@using (Html.BeginForm("Edit", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model =>model.Id)
+    @Html.HiddenFor(model =>model.ImgPath)
+
+    <section>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="col-md-3 d-grid">
+                        <a href="/Posts/Index" class="btn btn-outline-primary btn-light mt-3">
+                            <i class="fa fa-arrow-left"></i>
+                            Back To Posts
+                        </a>
+                    </div>
+
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                    <div>
+                        @Html.LabelFor(model => model.Title, new { @class = "form-label mt-2 " })
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div>
+                        @Html.LabelFor(model => model.CatId, null, new { @class = "form-label mt-2" })
+                        @Html.DropDownList("CatId", null, new { @class = "form-select" })
+                        @Html.ValidationMessageFor(model => model.CatId, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div>
+                        @Html.LabelFor(model => model.Body, new { @class = "form-label mt-2" })
+                        @Html.TextAreaFor(model => model.Body, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="w-50">
+                        <img src="@shortRelativeImagePath" class="img-fluid" />
+                    </div>
+                    <div>
+                        <label for="PostImage" class="form-label">Post Image</label>
+                        <input type="file" name="PostImage" id="PostImage" class="form-control" />
+                    </div>
+                    <div class="col-md-12 d-grid ">
+                        <button class="btn btn-primary mt-3">
+                            Save Change
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+}
+@section scripts {
+    <script>
+        CKEDITOR.replace("Body")
+    </script>
+}

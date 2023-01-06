@@ -1,0 +1,74 @@
+﻿@model Lect1.Models.Post
+@using System.Configuration
+
+@{
+    string fullImagePath = Model.ImgPath;
+    string justImageName = Path.GetFileName(fullImagePath);
+    string shortRelativeImagePath = $"/{ConfigurationManager.AppSettings["UserImageFolderName"].ToString()}/{justImageName}";
+    ViewBag.Title = $" \"{Model.Title}\" Details";
+}
+<!--Header-->
+<header class="bg-primary text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-pencil-square-o"></i> @ViewBag.Title
+        </h1>
+    </div>
+</header>
+<!--Action-->
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 d-grid">
+                <a href="/Posts/Index" class="btn btn-outline-primary btn-light mt-3">
+                    <i class="fa fa-arrow-left"></i>
+                    Back To Posts
+                </a>
+            </div>
+            <div class="col-md-3 d-grid ">
+                    <a href="/Posts/Edit/@Model.Id" class="btn btn-outline-primary btn-light mt-3">
+                    <i class="fa fa-edit"></i>
+                    Edit
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Body-->
+<div class="container ">
+    <div class="row">
+        
+             
+        <section>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <td class="h5">@Html.DisplayNameFor(model => model.Category.Title)</td>
+                    <td>@Html.DisplayFor(model => model.Category.Title)</td>
+                </tr>
+                <tr>
+                    <td class="h5">@Html.DisplayNameFor(model => model.Title)</td>
+                    <td>@Html.DisplayFor(model => model.Title)</td>
+                </tr>
+                <tr>
+                    <td class="h5">@Html.DisplayNameFor(model => model.UpdateDate)</td>
+                    <td>@Html.DisplayFor(model => model.UpdateDate)</td>
+                </tr>
+                <tr>
+                    <td class="h5"> @Html.DisplayNameFor(model => model.Body)</td>
+                    <td>@Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.Body).ToString()))</td>
+                </tr>
+            </table>
+
+        </section>
+
+        <section class="col-md-3" >
+            <img src="@shortRelativeImagePath " class="img-fluid"/>
+        </section>
+
+        </div>
+    </div>
+
+</div>
+

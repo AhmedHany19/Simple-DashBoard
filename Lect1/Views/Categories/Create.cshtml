@@ -1,0 +1,49 @@
+﻿@model Lect1.Models.Category
+
+<!--Header-->
+<header class="bg-success text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-folder"></i> Create Category
+        </h1>
+    </div>
+</header>
+
+<!--Body-->
+<section class="mt4">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto ">
+                    <div>
+                        @*<label for="title" class="form-label">Title</label>*@
+                        @Html.LabelFor(c => c.Title, "Title", new { @class = "form-label", @for = "title" })
+
+                        @*<input type="text" class="form-control" id="title" name="title" />*@
+                        @Html.TextBoxFor(c => c.Title,
+                                         new
+                                              {
+                                                  @class = "form-control",
+                                                  @placeHolder = "Category Title ....",
+                                                @title = "Category Title Field Here"
+                                              })
+
+                        @Html.ValidationMessageFor(c => c.Title, "", new { @class = "text-danger" })
+                    </div>
+                    <div>
+                        <a href="/Categories/Index" class="btn btn-outline-danger btn-light mt-3">
+                            <i class="fa fa-arrow-left"></i>
+                            Back To Categories
+                        </a>
+                        <button class="btn btn-success mt-3">
+                            Add Category
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>

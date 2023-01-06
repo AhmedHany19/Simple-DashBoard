@@ -1,0 +1,33 @@
+﻿@using Lect1.Models
+@model  ApplicationUser
+
+@{
+    ViewBag.Title = "Remove User";
+}
+<!--Header-->
+<header class="bg-danger text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-folder"></i> @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+<div class="container">
+    <section class="lead fw-bolder mt-4">
+        Are you sure that you want to remove the user with an email of "<span class="text-danger"> @Model.Email</span>"?
+    </section>
+
+    <section class="mt-4">
+        @using (Html.BeginForm("DeleteConfirmed", "Users", FormMethod.Post))
+        {
+            @Html.HiddenFor(u => u.Id)
+            <a href="/Users/Index" class="btn btn-light">
+                <i class="fa fa-arrow-left"></i>
+                Back to Users
+            </a>
+            <input type="submit" class="btn btn-danger" value="Confirm Delete" />
+
+        }
+    </section>
+</div>

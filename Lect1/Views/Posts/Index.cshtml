@@ -1,0 +1,171 @@
+﻿@model  IPagedList<Lect1.Models.Post>
+@using PagedList
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Posts";
+}
+
+<!--Header-->
+<header class="bg-primary text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-pencil"></i> @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+
+<!--Serach-->
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        @using (Html.BeginForm("Search", "Posts", FormMethod.Get, new { id = "form1" }))
+        {
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.ActionLink("Create Post",
+                 "Create", null, new
+                 {
+                     @class = "btn btn-primary"
+                 })
+                </div>
+
+                <div class="col-md-2">
+                    <div class="row">
+                        <label class="col-md-6">Page Size :</label>
+                        <div class="col-md-5">
+                            @Html.DropDownList("PageSize", ViewBag.PageSize as SelectList,
+                                new { @class = "form-select" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 ms-auto">
+
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="Search Posts..."
+                               name="searchFilter"
+                               value="@ViewBag.SearchFilter" />
+
+                        <button class="btn btn-primary" type="submit">
+                            Search
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+
+
+
+<!--Posts-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Posts</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Update date
+                                </th>
+
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Category.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UpdateDate)
+                                    </td>
+
+                                    <td>
+
+                                        <a href="/Posts/Edit/@item.Id" class="btn btn-warning" title="Edit">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+
+                                        <a href="/Posts/Delete/@item.Id" class="btn btn-danger" title="Delete">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+
+                                        <a href="/Posts/Details/@item.Id" class="btn btn-secondary">
+                                            <i class="fa fa-angle-double-right"></i> Details
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+
+                        @Html.PagedListPager(
+                                Model,
+                                page => Url.Action("Search", new { page, PageSize = ViewBag.psize }),
+                                new PagedListRenderOptions
+                                {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    LinkToPreviousPageFormat = "Previous",
+                                    LinkToNextPageFormat = "Next",
+                                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                    FunctionToTransformEachPageLink =
+                                            (li, a) =>
+                                            {
+                                                a.AddCssClass("page-link");
+                                                li.InnerHtml = a.ToString();
+                                                return li;
+                                            }
+                                }
+                       )
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts
+{
+    <script>
+        $(document).ready(
+            function () {
+                $("#PageSize").change(
+                    function () {
+                        $("#form1").submit();
+                    }
+                );
+            }
+        );
+    </script>
+}

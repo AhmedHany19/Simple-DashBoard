@@ -1,0 +1,38 @@
+﻿@using Lect1.Models
+@model  Category
+@{
+    ViewBag.Title = "Delete";
+}
+
+<!--HEADER-->
+
+<header class="bg-danger text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-folder"></i> @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+    <div class="container mt-3">
+
+        <section class="fw-bolder h3">
+        Are You Sure that you want to delete the category with a title "<span class="text-danger "> @Model.Title </span>"
+        </section>
+
+    </div>
+    <div class="container">
+        <div>
+            @using (Html.BeginForm("DeleteConfirmed", "Categories", FormMethod.Post))
+            { @Html.HiddenFor(c=>c.Id)
+                <a href="/Categories/Index" class="btn btn-outline-success btn-light mt-3">
+                    <i class="fa fa-arrow-left"></i>
+                    Back To Categories
+                </a>
+                <button class="btn btn-danger mt-3">
+                    Confirm Delete
+                </button>
+            }
+
+        </div>
+    </div>

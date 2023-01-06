@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Blogen</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Menu-->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark p-0">
+        <div class="container">
+
+            @Html.ActionLink("Blogen", "Index", "Home", null, new { @class = "navbar-brand" })
+
+
+            <button class="navbar-toggler"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbarCollapse"
+                 class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item px-2">
+
+                        @Html.ActionLink("Dashboard", "Index", "Home", null, new { @class = "nav-link active" })
+                    </li>
+                    <li class="nav-item px-2">
+                        @Html.ActionLink("Post", "Index", "Posts", null, new { @class = "nav-link active" })
+                    </li>
+                    <li class="nav-item px-2">
+                        @Html.ActionLink("Categories", "Index", "Categories", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item px-2">
+                        @Html.ActionLink("Users", "Index", "Users", null, new { @class = "nav-link" })
+                    </li>
+                </ul>
+               @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+
+    @RenderBody()
+
+    <footer class="bg-dark text-white mt-5 p-5">
+        <p class="lead text-center">
+            Copyright &#169; 2022 Blogen
+        </p>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

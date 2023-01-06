@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Lect1.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<!--Header-->
+<header class="bg-warning text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-users"></i> @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+<!--Serach-->
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                @Html.ActionLink("Add User",
+                "Create", null, new
+                {
+                    @class = "btn btn-warning text-light"
+                })
+            </div>
+            <div class="col-md-6 ms-auto">
+                @using (Html.BeginForm("Search", "Users", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="Search Categories..."
+                               name="searchFilter"
+                               value="@ViewBag.SearchFilter" />
+
+                        <button class="btn btn-warning text-light" type="submit">
+                            Search
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!--Users-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Users</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Id)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UserName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Email)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Id)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            <a href="/Users/Delete/@item.Id" class="btn btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

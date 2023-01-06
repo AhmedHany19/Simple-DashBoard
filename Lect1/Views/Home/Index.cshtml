@@ -1,0 +1,132 @@
+﻿
+@model List<Lect1.Models.Post>
+@{
+    ViewBag.Title = "DASHBOARD";
+}
+
+<!--HEADER-->
+<header class="bg-primary text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-cog"></i>  Dashboard
+        </h1>
+    </div>
+</header>
+<!--Actions-->
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 d-grid">
+                <a href="/Posts/Create" class="btn btn-primary" >                        
+                    <i class="fa fa-plus"></i> Add post
+                </a>
+            </div>
+
+            <div class="col-md-3 d-grid">
+                <a href="/Categories/Create" class="btn btn-success">
+                   <i class="fa fa-plus"></i> Add Category
+                </a>
+            </div>
+            <div class="col-md-3 d-grid">
+                <a href="/Posts/Create" class="btn btn-warning">
+                   <i class="fa fa-plus"></i> Add Users
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Posts-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Posts</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Id)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Category.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UpdateDate)
+                                        </td>
+
+                                        <td>
+                                            <a href="/Posts/Details/@item.Id" class="btn btn-secondary">
+                                                <i class="fa fa-angle-double-right"></i> Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-primary text-white text-center mb-3">
+                    <div class="card-body">
+                        <h3>Posts</h3>
+                        <h4 class="display-4">
+                            <i class="fa fa-pencil"></i> @ViewBag.PostsCount
+                        </h4>
+                        <a href="/Posts/Index"
+                           class="btn btn-outline-light btn-sm">
+                            View
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card bg-success text-white text-center mb-3">
+                    <div class="card-body">
+                        <h3>Categories</h3>
+                        <h4 class="display-4">
+                            <i class="fa fa-folder"></i>  @ViewBag.CategoriesCount
+                        </h4>
+                        <a href="/Categories/Index"
+                           class="btn btn-outline-light btn-sm">
+                            View
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card bg-warning text-white text-center mb-3">
+                    <div class="card-body">
+                        <h3>Users</h3>
+                        <h4 class="display-4">
+                            <i class="fa fa-users"></i> @ViewBag.UsersCount
+                        </h4>
+                        <a href="/Users/Index"
+                           class="btn btn-outline-light btn-sm">
+                            View
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

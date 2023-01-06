@@ -1,0 +1,52 @@
+﻿@using Lect1.Models
+@model Category
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<!--HEADER-->
+
+<header class="bg-success text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-folder"></i> @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+<!--Body-->
+
+<section class="mt-5">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6 mx-auto ">
+                    <div>
+                        @Html.LabelFor(c => c.Title, "Title", new { @class = "form-label", @for = "title" })
+                        @Html.TextBoxFor(c => c.Title,
+                                         new
+                                              {
+                                                  @class = "form-control",
+                                                  @placeHolder = "Category Title ....",
+                                                @title = "Category Title Field Here"
+                                              })
+
+                        @Html.ValidationMessageFor(c => c.Title, "", new { @class = "text-danger" })
+                    </div>
+                    <div>
+                        <a href="/Categories/Index" class="btn btn-outline-danger btn-light mt-3">
+                            <i class="fa fa-arrow-left"></i>
+                            Back To Categories
+                        </a>
+                        <button class="btn btn-success mt-3">
+                           Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>
